@@ -5,6 +5,7 @@ exports.getProjects = (req, res, next) => {
   res.status(200).json({ success: true, msg: 'Show all projects' });
 };
 
+
 // @desc Get all Project
 // @route GET /api/v1/projects/:id
 // @access Public
@@ -12,12 +13,14 @@ exports.getProject = (req, res, next) => {
   res.status(200).json({ success: true, msg: `get project ${req.params?.id}` });
 };
 
+
 // @desc  Create a Project
 // @route POST /api/v1/projects
 // @access Private
 exports.createProject = (req, res, next) => {
   res.status(200).json({ success: true, msg: 'Create New Project' });
 };
+
 
 // @desc  Update a Project
 // @route PUT /api/v1/projects/:id
