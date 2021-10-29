@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const colors = require('colors');
-
+const cookieParser = require('cookie-parser')
 // Routes
 const projects = require('./routes/project');
 const auth = require('./routes/auth');
@@ -27,7 +27,7 @@ if(process.env.NODE_ENV === 'development'){
     // app.use(logger);
     app.use(morgan('dev'));
 }
-
+app.use(cookieParser());
 
 // Mount routers
 

@@ -8,8 +8,17 @@ const {
   deleteProject,
 } = require('../../controllers/project');
 
-router.route('/').get(getProjects).post(createProject);
+const { protect, authorize } = require('../../middleware/auth');
 
-router.route('/:id').get(getProject).put(updateProject).delete(deleteProject);
+router
+  .route('/')
+  .get(protect, getProjects)
+  .post(protect, authorize('admin','superuser'), createProject);
+
+router
+  .route('/:id')
+  .get(protect, getProject)
+  .put(protect, authorize('admin', 'superuser'), updateProject)
+  .delete(protect, authorize('admin', 'superuser'), deleteProject);
 
 module.exports = router;

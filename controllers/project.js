@@ -4,7 +4,7 @@ const asyncHandler = require('../middleware/async');
 
 // @desc Get all Projects
 // @route GET /api/v1/projects
-// @access Public
+// @access Private
 exports.getProjects = asyncHandler(async (req, res, next) => {
   const projects = await Projects.find();
 
@@ -19,7 +19,7 @@ exports.getProjects = asyncHandler(async (req, res, next) => {
 
 // @desc Get all Project
 // @route GET /api/v1/projects/:id
-// @access Public
+// @access Private
 exports.getProject = asyncHandler(async (req, res, next) => {
   const project = await Projects.findById(req.params.id);
   if (!project) {
@@ -66,11 +66,11 @@ exports.updateProject = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.deleteProject = asyncHandler(async (req, res, next) => {
   const project = await Projects.findByIdAndDelete(req.params.id);
-
+  
   if (!project) {
     return next(
       new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
     );
   }
-  res.status(200).json({ success: true, data: {}, count: projects.length });
+  res.status(200).json({ success: true, data: {} });
 });
