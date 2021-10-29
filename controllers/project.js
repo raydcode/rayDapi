@@ -1,89 +1,76 @@
 const ErrorResponse = require('../utils/errorResponse');
 const Projects = require('../models/Project');
+const asyncHandler = require('../middleware/async');
 
 // @desc Get all Projects
 // @route GET /api/v1/projects
 // @access Public
-exports.getProjects = async (req, res, next) => {
-  try {
-    const projects = await Projects.find();
-    res
-      .status(200)
-      .json({ success: true, data: projects, count: projects.length });
-  } catch (error) {
-    next(error);
+exports.getProjects = asyncHandler(async (req, res, next) => {
+  const projects = await Projects.find();
+
+  if(!projects){
+    new ErrorResponse(`Projects not Found`, 404);
   }
-};
+
+  res
+    .status(200)
+    .json({ success: true, data: projects, count: projects.length });
+});
 
 // @desc Get all Project
 // @route GET /api/v1/projects/:id
 // @access Public
-exports.getProject = async (req, res, next) => {
-  try {
-    const project = await Projects.findById(req.params.id);
-    if (!project) {
-      return next(
-        new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
-      );
-    }
-    res.status(200).json({ success: true, data: project });
-  } catch (error) {
-    next(error);
+exports.getProject = asyncHandler(async (req, res, next) => {
+  const project = await Projects.findById(req.params.id);
+  if (!project) {
+    return next(
+      new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
+    );
   }
-};
+
+  res.status(200).json({ success: true, data: project });
+});
 
 // @desc  Create a Project
 // @route POST /api/v1/projects
 // @access Private
-exports.createProject = async (req, res, next) => {
-  try {
-    const project = await Projects.create(req.body);
-    res.status(201).json({
-      success: true,
-      data: project,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+exports.createProject = asyncHandler(async (req, res, next) => {
+  const project = await Projects.create(req.body);
+  res.status(201).json({
+    success: true,
+    data: project,
+  });
+});
 
 // @desc  Update a Project
 // @route PUT /api/v1/projects/:id
 // @access Private
-exports.updateProject = async (req, res, next) => {
-  try {
-    const project = await Projects.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+exports.updateProject = asyncHandler(async (req, res, next) => {
+  const project = await Projects.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    if (!project) {
-      return next(
-        new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
-      );
-    }
-    res
-      .status(200)
-      .json({ success: true, data: project, count: projects.length });
-  } catch (error) {
-    next(error);
+  if (!project) {
+    return next(
+      new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
+    );
   }
-};
+  res
+    .status(200)
+    .json({ success: true, data: project });
+});
 
 // @desc  Delete a Project
 // @route DELETE /api/v1/projects:id
 // @access Private
-exports.deleteProject = async (req, res, next) => {
-  try {
-    const project = await Projects.findByIdAndDelete(req.params.id);
+exports.deleteProject = asyncHandler(async (req, res, next) => {
+  const project = await Projects.findByIdAndDelete(req.params.id);
 
-    if (!project) {
-      return next(
-        new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
-      );
-    }
-    res.status(200).json({ success: true, data: {}, count: projects.length });
-  } catch (error) {
-    next(error);
+  if (!project) {
+    return next(
+      new ErrorResponse(`Project not Found with id ${req.params.id}`, 404)
+    );
   }
-};
+  res.status(200).json({ success: true, data: {}, count: projects.length });
+});

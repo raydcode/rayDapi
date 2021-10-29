@@ -5,6 +5,7 @@ const colors = require('colors');
 
 // Routes
 const projects = require('./routes/project');
+const auth = require('./routes/auth');
 
 //MiddleWares
 const logger = require('./middleware/logger');
@@ -31,6 +32,8 @@ if(process.env.NODE_ENV === 'development'){
 // Mount routers
 
 app.use('/api/v1/projects', projects);
+
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 

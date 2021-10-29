@@ -1,0 +1,12 @@
+POST /api/v1/auth/register HTTP/1.1
+Host: localhost:5000
+Content-Type: application/json
+Content-Length: 110
+
+{
+    "name": "RayDcode",
+    "email": "raydcode@gmail.com",
+    "password":"qwerty",
+    "role":"superuser"
+    
+}

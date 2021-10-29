@@ -1,0 +1,2 @@
+DELETE /api/v1/projects/61777b0318dcacd96ec1c95a HTTP/1.1
+Host: localhost:5000

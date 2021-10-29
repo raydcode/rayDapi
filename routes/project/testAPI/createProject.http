@@ -1,0 +1,13 @@
+POST /api/v1/projects HTTP/1.1
+Host: localhost:5000
+Content-Type: application/json
+Content-Length: 237
+
+{
+        "projectName": "Money pechu",
+         "description":"the quick brown fox jumps over the lazy dog ",
+        "domain": "karianne.info",
+        "teamSize": 7,
+        "active": false,
+        "cilentName": "Blanca McLaughlin"
+}

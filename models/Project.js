@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const ProjectSchema = new mongoose.Schema({
   projectName: {
@@ -6,6 +7,12 @@ const ProjectSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'Please enter a Project Name'],
     maxlength: [50, 'Project Name Cannot be exceed 50 characters'],
+  },
+  slug:String,
+  description:{
+    type:String,
+    required: [true, 'Please enter a description'],
+    maxlength: [500, 'Description cannot be more than 500 characters']
   },
   domain: {
     type: String,
@@ -29,5 +36,14 @@ const ProjectSchema = new mongoose.Schema({
     default: Date.now(),
   },
 });
+
+// create Project Slug from the Name 
+ProjectSchema.pre('save',function (next){
+
+  this.slug = slugify(this.projectName,{lower:true});
+
+   next();
+})
+
 
 module.exports = mongoose.model('Project', ProjectSchema);
