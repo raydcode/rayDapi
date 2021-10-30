@@ -13,12 +13,12 @@ const { protect, authorize } = require('../../middleware/auth');
 router
   .route('/')
   .get(protect, getProjects)
-  .post(protect, authorize('admin','superuser'), createProject);
+  .post(protect, authorize('admin', 'superadmin'), createProject);
 
 router
   .route('/:id')
   .get(protect, getProject)
-  .put(protect, authorize('admin', 'superuser'), updateProject)
-  .delete(protect, authorize('admin', 'superuser'), deleteProject);
+  .put(protect, authorize('admin', 'superadmin'), updateProject)
+  .delete(protect, authorize('admin', 'superadmin'), deleteProject);
 
 module.exports = router;

@@ -35,6 +35,11 @@ const ProjectSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  user:{
+    type:mongoose.Schema.ObjectId,
+    ref:'User', 
+    required:true
+  }
 });
 
 // create Project Slug from the Name 
