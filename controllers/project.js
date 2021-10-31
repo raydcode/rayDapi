@@ -106,5 +106,7 @@ exports.deleteProject = asyncHandler(async (req, res, next) => {
 
   project = await Projects.findByIdAndDelete(req.params.id);
 
-  res.status(200).json({ success: true, data: {}, message: 'Project Deleted SuccesFully' });
+  res
+    .status(200)
+    .json({ success: true, data: {}, message: 'Project Deleted SuccesFully' });
 });
