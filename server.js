@@ -6,7 +6,11 @@ const cookieParser = require('cookie-parser');
 //Security configuration
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean')
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
+const cors = require('cors');
+
 // Routes
 const projects = require('./routes/project');
 const auth = require('./routes/auth');
@@ -34,14 +38,27 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(cookieParser());
 
-
-
-//Santize data :
+//Sanitize data :
 app.use(mongoSanitize());
 
 //Set Security Headers:
 app.use(helmet());
 app.use(xss());
+
+//Rate Limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+//  apply to all requests
+app.use(limiter);
+
+// Prevent Http Parameter Pollution
+app.use(hpp());
+
+// CORS init
+app.use(cors());
 
 // Mount routers
 app.use('/api/v1/projects', projects);
