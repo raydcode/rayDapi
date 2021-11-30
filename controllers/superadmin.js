@@ -3,15 +3,20 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
 // @desc Get all Super Admins
-// @route Get /api/v1/auth/sudoadmins
+// @route Get /api/v1/sudoadmins
 // @access Private/Super Admin
 
 exports.getAdmins = asyncHandler(async (req, res, next) => {
-  res.status(200).json(res.advancedResponse);
+  const superadmins = await User.find({ role: 'superadmin' }, [
+    'name',
+    'email',
+    'role',
+  ]);
+  res.status(200).json({ success: true, superadmins });
 });
 
 // @desc Get single Super Admin
-// @route Get /api/v1/auth/sudoadmin
+// @route Get /api/v1/sudoadmin
 // @access Private/Super Admin
 
 exports.getAdmin = asyncHandler(async (req, res, next) => {
@@ -20,16 +25,21 @@ exports.getAdmin = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Create a new Super Admin
-// @route POST /api/v1/auth/sudoadmin
+// @route POST /api/v1/sudoadmin
 // @access Private/Super Admin
 
 exports.createAdmin = asyncHandler(async (req, res, next) => {
   const Superuser = await User.create(req.body);
-  res.status(201).json({ success: true, data: Superuser });
+  res
+    .status(201)
+    .json({
+      success: true,
+      message: `user created succesfully =====> ${Superuser.name}`,
+    });
 });
 
 // @desc Update Super Admin
-// @route PUT /api/v1/auth/sudoadmin/:id
+// @route PUT /api/v1/sudoadmin/:id
 // @access Private/Super Admin
 
 exports.updateAdmin = asyncHandler(async (req, res, next) => {
@@ -41,7 +51,7 @@ exports.updateAdmin = asyncHandler(async (req, res, next) => {
 });
 
 // @desc Delete Super Admin
-// @route Delete /api/v1/auth/sudoadmin/:id
+// @route Delete /api/v1/sudoadmin/:id
 // @access Private/Super Admin
 
 exports.deleteAdmin = asyncHandler(async (req, res, next) => {

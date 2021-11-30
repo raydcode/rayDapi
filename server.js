@@ -14,7 +14,7 @@ const cors = require('cors');
 // Routes
 const projects = require('./routes/project');
 const auth = require('./routes/auth');
-
+const superadmin = require('./routes/superadmin');
 //MiddleWares
 const errorHandler = require('./middleware/errorHandler');
 
@@ -64,6 +64,8 @@ app.use(cors());
 app.use('/api/v1/projects', projects);
 
 app.use('/api/v1/auth', auth);
+
+app.use('/api/v1/sudoadmins', superadmin);
 
 app.use(errorHandler);
 
