@@ -30,12 +30,10 @@ exports.getAdmin = asyncHandler(async (req, res, next) => {
 
 exports.createAdmin = asyncHandler(async (req, res, next) => {
   const Superuser = await User.create(req.body);
-  res
-    .status(201)
-    .json({
-      success: true,
-      message: `user created succesfully =====> ${Superuser.name}`,
-    });
+  res.status(201).json({
+    success: true,
+    message: `user created succesfully =====> ${Superuser.name}`,
+  });
 });
 
 // @desc Update Super Admin
