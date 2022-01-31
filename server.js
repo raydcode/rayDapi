@@ -73,13 +73,13 @@ const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
   console.log(
-    `Server Running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+    `Server Running in ${process.env.NODE_ENV} mode on port ${PORT}`
   );
 });
 
 // Handling Unhandled Rejections :
 process.on('unhandledRejection', (err, promise) => {
-  console.log(`Error : ${err.message}`.red.bold);
+  console.log(`Error : ${err.message}`);
   //  Close Server
   server.close(() => {
     process.exit(1);
